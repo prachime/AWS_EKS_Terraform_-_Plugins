@@ -24,6 +24,42 @@ variable "environment" {
   type        = string
 }
 
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC."
+  type        = string
+}
+
+variable "pub_subnet_count" {
+  description = "Number of subnets to create."
+  type        = number
+}
+
+variable "pri_subnet_count" {
+  description = "Number of subnets to create."
+  type        = number
+}
+
+variable "pri_subnet_cidrs" {
+  description = "List of CIDR blocks for the private subnets."
+  type        = list(string)
+}
+
+variable "pub_subnet_cidrs" {
+  description = "List of CIDR blocks for the public subnets."
+  type        = list(string)
+}
+
+variable "azs" {
+  description = "List of Availability Zones to use."
+  type        = list(string)
+}
+
+variable "nat_eip_count" {
+  description = "Number of Elastic IPs to attach to the NAT Gateway"
+  type        = number
+  default     = 1
+}
+
 variable "oidc_id" {
   description = "OIDC ID for EKS Cluster"
   type        = string

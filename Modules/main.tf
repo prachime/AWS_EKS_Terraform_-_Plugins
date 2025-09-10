@@ -1,3 +1,31 @@
+# VPC module
+# This module should create a VPC with the specified CIDR block
+module "vpc" {
+  source   = "./modules/vpc"
+  vpc_cidr = var.vpc_cidr
+}
+
+# Public Subnet module
+# This module should create public subnets
+module "public_subnet" {
+  source                = "./modules/public_subnet"
+  vpc_id                = module.vpc.vpc_id
+  pub_subnet_count      = var.pub_subnet_count
+  pub_subnet_cidrs      = var.pub_subnet_cidrs
+  public_route_table_id = module.route_tables.public_route_table_id
+  azs                   = var.azs
+}
+
+# Private Subnet module
+# This module should create private subnets
+module "private_subnet" {
+  source           = "./modules/private_subnet"
+  vpc_id           = module.vpc.vpc_id
+  pri_subnet_count = var.pri_subnet_count
+  pri_subnet_cidrs = var.pri_subnet_cidrs
+  azs              = var.azs
+}
+
 # Module for EKS
 module "eks" {
   source       = "./modules/eks"

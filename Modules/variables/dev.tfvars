@@ -10,7 +10,16 @@ secret_key=""
 role_arn ="arn:aws:iam::097096559031:role/AWSTerraformAdminRole"
 session_name="Terraform_dev"
 
+#VPC and SubNet Config
+vpc_cidr         = "10.1.0.0/16"
+pub_subnet_cidrs = ["10.1.0.0/20", "10.1.16.0/20"]
+pri_subnet_cidrs = ["10.1.32.0/20", "10.1.48.0/20","10.1.64.0/20","10.1.80.0/20"]
+pub_subnet_count = 2
+pri_subnet_count = 4
+azs              = ["us-east-1a", "us-east-1b","us-east-1c","us-east-1d"]
+nat_eip_count    = 3
 
+ 
 oidc_id = ""
 vpc_id  = ""
 
