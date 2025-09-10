@@ -37,3 +37,14 @@ variable "name" {
   description = "Name of the project"
   type        = string
 }
+
+variable "tags" {
+  description = "A map of tags to add to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "security_group_id" {
+  description = "The ID of the Security group to associate with the RDS cluster"
+  type        = string
+}

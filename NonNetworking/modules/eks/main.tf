@@ -1,6 +1,6 @@
 resource "aws_iam_role" "eks_cluster_role" {
   name = "${terraform.workspace}-${var.name}-eks-cluster-role"
-
+  
   assume_role_policy = <<POLICY
 {
     "Version": "2012-10-17",
@@ -64,7 +64,7 @@ resource "aws_iam_policy" "aws_iam_eks_ebs_policy" {
 resource "aws_eks_cluster" "aws_eks" {
   name     = "${terraform.workspace}-${var.name}-cluster"
   role_arn = aws_iam_role.eks_cluster_role.arn
-
+  tags = var.tags
   vpc_config {
     subnet_ids = [
       var.pub_subnet_1,
@@ -72,6 +72,7 @@ resource "aws_eks_cluster" "aws_eks" {
       var.pri_subnet_1,
       var.pri_subnet_2
     ]
+    security_group_ids = [var.security_group_id]
   }
   #depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
 }

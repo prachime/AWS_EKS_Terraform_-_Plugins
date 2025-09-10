@@ -1,3 +1,13 @@
+variable "role_arn" {
+  description = "ARN of thr Terraform role to assume"
+  type        = string
+}
+
+variable "session_name" {
+  description = "STS Session Name"
+  type        = "terraform"
+}
+
 variable "account_id" {
   description = "AWS Account ID"
   type        = string
@@ -116,49 +126,103 @@ variable "s3_restrict_public_buckets" {
   default     = true
 }
 
-# RDS variables
+# # RDS variables
 
-variable "rds_username" {
-  description = "Username for the RDS master user"
+# variable "rds_username" {
+#   description = "Username for the RDS master user"
+#   type        = string
+# }
+
+# variable "rds_engine" {
+#   description = "Database engine for the RDS instance"
+#   type        = string
+# }
+
+# variable "rds_engine_version" {
+#   description = "The engine version for RDS"
+#   type        = string
+# }
+
+# variable "rds_db_cluster_instance_class" {
+#   description = "The compute and memory capacity of each DB instance in the Multi-AZ DB cluster"
+#   type        = string
+# }
+
+# variable "rds_storage_type" {
+#   description = "One of 'io1', 'gp2', 'gp3', standard (magnetic)"
+#   type        = string
+# }
+
+# variable "rds_allocated_storage" {
+#   description = "The allocated storage in gigabytes"
+#   type        = number
+# }
+
+# variable "rds_iops" {
+#   description = "Storage iops"
+#   type        = number
+# }
+
+# variable "rds_database_name" {
+#   description = "Name of the database to create in RDS"
+#   type        = string
+# }
+
+# variable "rds_sg_ingress_rules" {
+#   description = "List of ingress rules"
+#   type = list(object({
+#     from_port   = number
+#     to_port     = number
+#     protocol    = string
+#     cidr_blocks = list(string)
+#     description = string
+#   }))
+# }
+
+# variable "rds_availability_zones" {
+#   description = "List of availability zones for the RDS cluster"
+#   type        = list(string)
+# }
+
+# variable "rds_subnet_ids" {
+#   description = "List of subnet IDs for the RDS cluster"
+#   type        = list(string)
+# }
+
+# variable "rds_enabled_cloudwatch_logs_exports" {
+#   description = "List of log types to enable for exporting to CloudWatch logs"
+#   type        = list(string)
+# }
+
+# variable "rds_preferred_backup_window" {
+#   description = "Preferred backup window for RDS"
+#   type        = string
+#   default     = "02:00-03:00"
+# }
+
+# variable "rds_preferred_maintenance_window" {
+#   description = "Preferred maintenance window for RDS"
+#   type        = string
+#   default     = "sun:03:00-sun:04:00"
+# }
+
+# variable "performance_insights_enabled" {
+#   description = "A mapping of tags to assign to the resource"
+#   type        = bool
+# }
+
+#KMS
+variable "kms_key_id" {
+  description = "Key ID for the parameters"
   type        = string
 }
 
-variable "rds_engine" {
-  description = "Database engine for the RDS instance"
+variable "kms_key_id" {
+  description = "Key ID for the parameters"
   type        = string
 }
 
-variable "rds_engine_version" {
-  description = "The engine version for RDS"
-  type        = string
-}
-
-variable "rds_db_cluster_instance_class" {
-  description = "The compute and memory capacity of each DB instance in the Multi-AZ DB cluster"
-  type        = string
-}
-
-variable "rds_storage_type" {
-  description = "One of 'io1', 'gp2', 'gp3', standard (magnetic)"
-  type        = string
-}
-
-variable "rds_allocated_storage" {
-  description = "The allocated storage in gigabytes"
-  type        = number
-}
-
-variable "rds_iops" {
-  description = "Storage iops"
-  type        = number
-}
-
-variable "rds_database_name" {
-  description = "Name of the database to create in RDS"
-  type        = string
-}
-
-variable "rds_sg_ingress_rules" {
+variable "eks_sg_ingress_rules" {
   description = "List of ingress rules"
   type = list(object({
     from_port   = number
@@ -169,39 +233,43 @@ variable "rds_sg_ingress_rules" {
   }))
 }
 
-variable "rds_availability_zones" {
-  description = "List of availability zones for the RDS cluster"
-  type        = list(string)
-}
+# Node Pool variables
 
-variable "rds_subnet_ids" {
-  description = "List of subnet IDs for the RDS cluster"
-  type        = list(string)
-}
-
-variable "rds_enabled_cloudwatch_logs_exports" {
-  description = "List of log types to enable for exporting to CloudWatch logs"
-  type        = list(string)
-}
-
-variable "rds_preferred_backup_window" {
-  description = "Preferred backup window for RDS"
+variable "node_capacity_type" {
+  description = "ON_DEMAND or SPOT"
   type        = string
-  default     = "02:00-03:00"
+  default     = "ON_DEMAND"
 }
 
-variable "rds_preferred_maintenance_window" {
-  description = "Preferred maintenance window for RDS"
-  type        = string
-  default     = "sun:03:00-sun:04:00"
+variable "node_instance_types" {
+  description = "List of instance types"
+  type        = list(string)
+  default     = ["t3.micro"]
 }
 
-variable "performance_insights_enabled" {
-  description = "A mapping of tags to assign to the resource"
-  type        = bool
+variable "node_ami_type" {
+  description = "EKS node group AMI type"
+  type        =  string
+  default     = "BOTTLEROCKET_ARM_64"
 }
 
-variable "kms_key_id" {
-  description = "Key ID for the parameters"
-  type        = string
+variable "node_desired_size" {
+  type    = number
+  default = 3
+}
+
+variable "node_min_size" {
+  type    = number
+  default = 3
+}
+
+variable "node_max_size" {
+  type    = number
+  default = 5
+}
+
+variable "node_max_unavailable" {
+  description = "Max nodes unavailable during a rolling update"
+  type        = number
+  default     = 1
 }

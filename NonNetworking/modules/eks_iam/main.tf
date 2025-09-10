@@ -1,6 +1,6 @@
 resource "aws_iam_policy" "aws_iam_eks_ecr_policy" {
   name = "${terraform.workspace}-${var.name}-eks-ecr-policy"
-  tags = { ENV = "Prod" }
+  tags = var.tags
   #  path        = "/"
 
   policy = jsonencode({
@@ -22,7 +22,7 @@ resource "aws_iam_policy" "aws_iam_eks_ecr_policy" {
 
 resource "aws_iam_policy" "aws_iam_eks_asg_policy" {
   name = "${terraform.workspace}-${var.name}-eks-asg-policy"
-
+  tags = var.tags
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -44,7 +44,7 @@ resource "aws_iam_policy" "aws_iam_eks_asg_policy" {
 }
 resource "aws_iam_policy" "aws_iam_eks_alb_node_policy" {
   name = "${terraform.workspace}-${var.name}-eks-alb-node-policy"
-  tags = { ENV = "Prod" }
+  tags = var.tags
   #  path        = "/"
 
   policy = jsonencode({
@@ -305,7 +305,7 @@ resource "aws_iam_policy" "aws_iam_eks_alb_node_policy" {
 
 resource "aws_iam_role" "aws_iam_eks_asg_role" {
   name = "${terraform.workspace}-${var.name}-eks-asg-role"
-  tags = { ENV = "Prod" }
+  tags = var.tags
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -328,7 +328,7 @@ resource "aws_iam_role" "aws_iam_eks_asg_role" {
 
 resource "aws_iam_role" "aws_iam_eks_alb_node_role" {
   name = "${terraform.workspace}-${var.name}-eks-alb-node-role"
-  tags = { ENV = "Prod" }
+  tags = var.tags
 
   assume_role_policy = <<POLICY
 {

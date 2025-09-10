@@ -12,36 +12,3 @@ resource "aws_ecr_repository" "this" {
 
   tags = var.tags
 }
-
-data "aws_iam_policy_document" "repository_policy" {
-  statement {
-    sid    = "AllowPushPull"
-    effect = "Allow"
-
-    principals {
-      type        = "AWS"
-      identifiers = [
-        "arn:aws:iam::588738570692:root",
-        "arn:aws:iam::443370703496:role/EC2-Pipeline-Agent-For-AzureDevOps",
-      ]
-    }
-
-    actions = [
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:BatchGetImage",
-      "ecr:CompleteLayerUpload",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:InitiateLayerUpload",
-      "ecr:PutImage",
-      "ecr:UploadLayerPart"
-    ]
-  }
-}
-
-
-
-resource "aws_ecr_repository_policy" "repository_policy" {
-  count      = length(var.service_names)
-  repository = aws_ecr_repository.this[count.index].name
-  policy     = data.aws_iam_policy_document.repository_policy.json
-}

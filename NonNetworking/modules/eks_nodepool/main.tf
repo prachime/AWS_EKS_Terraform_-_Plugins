@@ -1,36 +1,33 @@
 resource "aws_eks_node_group" "aws_eks_nodes" {
   cluster_name    = var.eks_name
   node_group_name = "${terraform.workspace}-private-ng"
-  node_role_arn   = var.eks_alb_node_role_arn
-  ami_type        = "BOTTLEROCKET_ARM_64"
+  node_role_arn   = var.eks_alb_node_role_arn"
 
   subnet_ids = [
     var.pri_subnet_1,
     var.pri_subnet_2
   ]
 
-  # change the subnest to array
 
-  capacity_type  = "SPOT"
-  instance_types = ["c6g.large"]
+  capacity_type  = var.capacity_type
+  instance_types = var.instance_types
+  ami_type       = var.ami_type
 
   scaling_config {
-    desired_size = 8
-    max_size     = 10
-    min_size     = 1
+    desired_size = var.desired_size
+    max_size     = var.max_size
+    min_size     = var.min_size
   }
 
   update_config {
-    max_unavailable = 1
+    max_unavailable = var.max_unavailable
   }
 
   labels = {
     role = "general"
   }
 
-  #   depends_on = [
-  #     var.worker_node_policy_attach,
-  #     var.cni_node_policy_attach,
-  #     var.registry_policy_attach,
-  #   ]
+tags = {
+ "k8s.io/cluster-autoscaler/enabled"                ="true"
+  "k8s.io/cluster-autoscaler/${var.eks_name}"       ="owned"
 }

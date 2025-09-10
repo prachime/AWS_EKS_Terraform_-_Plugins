@@ -8,6 +8,16 @@ module "eks" {
   account_id   = var.account_id
   oidc_id      = var.oidc_id
   name         = var.name
+  security_group_id = module.eks_security_group.security_group_id
+}
+
+module "eks_security_group" {
+  source        = "./modules/sg"
+  name          = "${terraform.workspace}-${var.name}-eks-SG"
+  description   = "${terraform.workspace}-${var.name}-eks-SG
+  vpc_id        = var.vpc_id
+  ingress_rules = var.eks_sg_ingress_rules
+  tags          = merge(var.tags, { Name = "${terraform.workspace}-${var.name}-eks-SG} )
 }
 
 module "eks_iam" {
@@ -45,35 +55,35 @@ module "parameter_store" {
   key_id   = var.kms_key_id
 }
 
-module "rds_security_group" {
-  source        = "./modules/sg"
-  name          = "${terraform.workspace}-${var.rds_engine}-db-SG"
-  description   = "${terraform.workspace}-${var.rds_engine}-db-SG"
-  vpc_id        = var.vpc_id
-  ingress_rules = var.rds_sg_ingress_rules
-  tags          = merge(var.tags, { Name = "${terraform.workspace}-${var.rds_engine}-db-SG" })
-}
+# module "rds_security_group" {
+#   source        = "./modules/sg"
+#   name          = "${terraform.workspace}-${var.rds_engine}-db-SG"
+#   description   = "${terraform.workspace}-${var.rds_engine}-db-SG"
+#   vpc_id        = var.vpc_id
+#   ingress_rules = var.rds_sg_ingress_rules
+#   tags          = merge(var.tags, { Name = "${terraform.workspace}-${var.rds_engine}-db-SG" })
+# }
 
-module "rds" {
-  source                          = "./modules/rds"
-  identifier                      = "${terraform.workspace}-postgres-db"
-  engine                          = var.rds_engine
-  engine_version                  = var.rds_engine_version
-  db_cluster_instance_class       = var.rds_db_cluster_instance_class
-  availability_zones              = var.rds_availability_zones
-  database_name                   = var.rds_database_name
-  master_username                 = var.rds_username
-  enabled_cloudwatch_logs_exports = var.rds_enabled_cloudwatch_logs_exports
-  subnet_ids                      = var.rds_subnet_ids
-  security_group_id               = module.rds_security_group.security_group_id
-  storage_type                    = var.rds_storage_type
-  allocated_storage               = var.rds_allocated_storage
-  iops                            = var.rds_iops
-  preferred_backup_window         = var.rds_preferred_backup_window
-  preferred_maintenance_window    = var.rds_preferred_maintenance_window
-  tags                            = var.tags
-  performance_insights_enabled    = var.performance_insights_enabled
-}
+# module "rds" {
+#   source                          = "./modules/rds"
+#   identifier                      = "${terraform.workspace}-postgres-db"
+#   engine                          = var.rds_engine
+#   engine_version                  = var.rds_engine_version
+#   db_cluster_instance_class       = var.rds_db_cluster_instance_class
+#   availability_zones              = var.rds_availability_zones
+#   database_name                   = var.rds_database_name
+#   master_username                 = var.rds_username
+#   enabled_cloudwatch_logs_exports = var.rds_enabled_cloudwatch_logs_exports
+#   subnet_ids                      = var.rds_subnet_ids
+#   security_group_id               = module.rds_security_group.security_group_id
+#   storage_type                    = var.rds_storage_type
+#   allocated_storage               = var.rds_allocated_storage
+#   iops                            = var.rds_iops
+#   preferred_backup_window         = var.rds_preferred_backup_window
+#   preferred_maintenance_window    = var.rds_preferred_maintenance_window
+#   tags                            = var.tags
+#   performance_insights_enabled    = var.performance_insights_enabled
+# }
 
 module "s3" {
   source = "./modules/s3"
