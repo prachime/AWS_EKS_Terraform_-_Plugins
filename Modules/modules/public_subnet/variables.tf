@@ -13,11 +13,6 @@ variable "pub_subnet_count" {
   description = "Number of public subnets to create."
 }
 
-variable "public_route_table_id" {
-  type        = string
-  description = "ID of the public route table"
-}
-
 variable "azs" {
   type        = list(string)
   description = "List of availability zones"

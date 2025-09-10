@@ -1,4 +1,3 @@
-# VPC module
 # This module should create a VPC with the specified CIDR block
 module "vpc" {
   source   = "./modules/vpc"
@@ -12,7 +11,6 @@ module "public_subnet" {
   vpc_id                = module.vpc.vpc_id
   pub_subnet_count      = var.pub_subnet_count
   pub_subnet_cidrs      = var.pub_subnet_cidrs
-  public_route_table_id = module.route_tables.public_route_table_id
   azs                   = var.azs
 }
 
