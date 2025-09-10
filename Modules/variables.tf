@@ -5,7 +5,7 @@ variable "role_arn" {
 
 variable "session_name" {
   description = "STS Session Name"
-  type        = "terraform"
+  type        = string
 }
 
 variable "account_id" {
@@ -253,10 +253,6 @@ variable "kms_key_id" {
   type        = string
 }
 
-variable "kms_key_id" {
-  description = "Key ID for the parameters"
-  type        = string
-}
 
 variable "eks_sg_ingress_rules" {
   description = "List of ingress rules"

@@ -3,10 +3,6 @@ region      = "us-east-1"
 environment = "dev"
 name        = "CSSTech"
 
-
-access_key=""
-secret_key=""
-
 role_arn ="arn:aws:iam::097096559031:role/AWSTerraformAdminRole"
 session_name="Terraform_dev"
 

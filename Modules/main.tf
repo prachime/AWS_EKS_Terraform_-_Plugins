@@ -42,11 +42,12 @@ module "eks" {
 module "eks_security_group" {
   source        = "./modules/sg"
   name          = "${terraform.workspace}-${var.name}-eks-SG"
-  description   = "${terraform.workspace}-${var.name}-eks-SG
+  description   = "${terraform.workspace}-${var.name}-eks-SG"
   vpc_id        = var.vpc_id
   ingress_rules = var.eks_sg_ingress_rules
-  tags          = merge(var.tags, { Name = "${terraform.workspace}-${var.name}-eks-SG} )
+  tags          = merge(var.tags, { Name = "${terraform.workspace}-${var.name}-eks-SG" })
 }
+
 
 module "eks_iam" {
   source                  = "./modules/eks_iam"
