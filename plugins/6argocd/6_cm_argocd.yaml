@@ -1,0 +1,11 @@
+data:
+  dex.config: |
+    connectors:
+    - config:
+        clientID: 
+        clientSecret: 
+        issuer: https://accounts.google.com
+      type: oidc
+      id: google
+      name: Google
+  url: https://stage-sparc-argocd.xalts.io

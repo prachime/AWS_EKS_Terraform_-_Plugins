@@ -1,3 +1,3 @@
-# AWS_EKS_Terraform_and_Plugins
-# AWS_EKS_Terraform_and_Plugins
-# AWS_EKS_Terraform_and_Plugins
+# sparc-terraform
+
+terraform apply -var-file variables/$(terraform workspace show).tfvars
