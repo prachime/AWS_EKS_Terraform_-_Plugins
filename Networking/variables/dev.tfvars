@@ -14,12 +14,4 @@ sparc_vpc_ids = {
     id     = "vpc-0f6e81e61274f7089"
     region = "us-east-1"
   }
-  "vpc2" = {
-    id     = "vpc-014e0aff70837daaa"
-    region = "us-east-1"
   }
-  "vpc3" = {
-    id     = "vpc-0be420af0abd5547b"
-    region = "us-east-1"
-  }
-}
