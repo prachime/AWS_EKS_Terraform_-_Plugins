@@ -5,7 +5,7 @@ resource "aws_subnet" "pri_subnet" {
   availability_zone = element(var.azs, count.index)
 
   tags = {
-    Name = "${terraform.workspace}-sparc-private-${count.index + 1}-subnet-${var.azs[count.index]}",
+    Name = "${terraform.workspace}-private-${count.index + 1}-subnet-${var.azs[count.index]}",
     Type = "private"
   }
 }

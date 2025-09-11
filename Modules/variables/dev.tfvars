@@ -16,8 +16,8 @@ azs              = ["us-east-1a", "us-east-1b","us-east-1c","us-east-1d"]
 nat_eip_count    = 3
 
  
-oidc_id = ""
-vpc_id  = ""
+oidc_id = "9911F7C5BBBC4D6C0430B6F4E4E47400"
+vpc_id  = "vpc-02823e2828bc3f9b0"
 
 
 
@@ -31,10 +31,10 @@ s3_ignore_public_acls      = true
 s3_restrict_public_buckets = true
 
 
-pri_subnet_1 = ""
-pri_subnet_2 = ""
-pub_subnet_1 = ""
-pub_subnet_2 = ""
+pri_subnet_1 = "subnet-02021355534b6fe5d"
+pri_subnet_2 = "subnet-08650727de7de4c59"
+pub_subnet_1 = "subnet-0d768d9800cc49aad"
+pub_subnet_2 = "subnet-0c7b08e3165e802d0"
 
 
 # Parameter stores
@@ -60,61 +60,21 @@ tags = {
 }
 
 
-# RDS-related variables
-# rds_engine                          = "postgres"
-# rds_engine_version                  = "16.4"
-# rds_db_cluster_instance_class       = "db.c6gd.medium"
-# rds_database_name                   = "nonprod_sparc_postgres_db"
-# rds_username                        = "postgres"
-# rds_storage_type                    = "gp3"
-# rds_allocated_storage               = 50
-# rds_iops                            = 3000
-# rds_availability_zones              = ["us-east-1a", "us-east-1b", "us-east-1c"]
-# rds_subnet_ids                      = ["subnet-0e0606b76df5f096d", "subnet-016abd6e88e7a5c16", "subnet-0662dfbdd2a26766f", "subnet-03a2ff09fc99ca899"]
-# rds_enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-# rds_preferred_backup_window         = "04:30-05:30"
-# rds_preferred_maintenance_window    = "sun:05:30-sun:06:00"
-# performance_insights_enabled        = "false"
-# rds_sg_ingress_rules = [
-#   {
-#     from_port   = -1
-#     to_port     = -1
-#     protocol    = "-1"
-#     cidr_blocks = ["172.19.0.0/16"]
-#     description = "Allow acess from nonprod-shared-vpc"
-#   },
-#   {
-#     from_port   = 5432
-#     to_port     = 5432
-#     protocol    = "tcp"
-#     cidr_blocks = ["172.17.0.0/16"]
-#     description = "Allow access from VPN VPC"
-#   },
-#   {
-#     from_port   = 5432
-#     to_port     = 5432
-#     protocol    = "tcp"
-#     cidr_blocks = ["172.18.0.0/16"]
-#     description = "Allow access from dev VPC"
-#   }
-# ]
-
-
-kms_key_id = ""
+kms_key_id = "arn:aws:kms:us-east-1:097096559031:key/4c0b4b29-8725-4453-b26a-735fbbaae650"
 
 eks_sg_ingress_rules = [
   {
     from_port    = 443
     to_port      = 443
     protocol     = "TCP"
-    cidr_blocks  = ["10.202.104.0/23"]
+    cidr_blocks  = ["10.1.0.0/16"]
     description  = "Allow access from nonprod-shared-vpc"
   },
   {
     from_port    = 80
     to_port      = 80
     protocol     = "TCP"
-    cidr_blocks  = ["10.202.104.0/23"]
+    cidr_blocks  = ["10.1.0.0/16"]
     description  = "Allow access from nonprod-shared-vpc"
   }
 ]
