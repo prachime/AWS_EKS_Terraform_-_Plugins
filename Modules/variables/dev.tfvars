@@ -81,9 +81,9 @@ eks_sg_ingress_rules = [
 
 #Nodepool Variables
 
-node_capacity_type    = "SPOT"
+node_capacity_type    = "ON_DEMAND"
 node_instance_types   = ["t3.micro"]
 node_desired_size     = 1
 node_min_size         = 1
-node_max_size         = 2
-node_ami_type         = "BOTTLEROCKET_ARM_64"
+node_max_size         = 1
+node_ami_type         = "AL2_x86_64"

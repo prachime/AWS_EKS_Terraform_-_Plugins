@@ -65,8 +65,22 @@ module "eks_nodepool" {
   pri_subnet_2          = var.pri_subnet_2
   eks_alb_node_role_arn = module.eks_iam.eks_alb_node_role_arn
   eks_name              = module.eks.aws_eks_cluster_name
-  depends_on            = [module.eks_iam.worker_node_policy_attach, module.eks_iam.cni_node_policy_attach, module.eks_iam.registry_policy_attach]
+  
+  capacity_type      = var.node_capacity_type
+  instance_types     = var.node_instance_types
+  ami_type           = var.node_ami_type
+  desired_size       = var.node_desired_size
+  min_size           = var.node_min_size
+  max_size           = var.node_max_size
+  max_unavailable    = var.node_max_unavailable
+
+  depends_on = [
+    module.eks_iam.worker_node_policy_attach,
+    module.eks_iam.cni_node_policy_attach,
+    module.eks_iam.registry_policy_attach
+  ]
 }
+
 
 module "ecr" {
   source        = "./modules/ecr"
@@ -81,36 +95,6 @@ module "parameter_store" {
   tags     = var.tags
   key_id   = var.kms_key_id
 }
-
-# module "rds_security_group" {
-#   source        = "./modules/sg"
-#   name          = "${terraform.workspace}-${var.rds_engine}-db-SG"
-#   description   = "${terraform.workspace}-${var.rds_engine}-db-SG"
-#   vpc_id        = var.vpc_id
-#   ingress_rules = var.rds_sg_ingress_rules
-#   tags          = merge(var.tags, { Name = "${terraform.workspace}-${var.rds_engine}-db-SG" })
-# }
-
-# module "rds" {
-#   source                          = "./modules/rds"
-#   identifier                      = "${terraform.workspace}-postgres-db"
-#   engine                          = var.rds_engine
-#   engine_version                  = var.rds_engine_version
-#   db_cluster_instance_class       = var.rds_db_cluster_instance_class
-#   availability_zones              = var.rds_availability_zones
-#   database_name                   = var.rds_database_name
-#   master_username                 = var.rds_username
-#   enabled_cloudwatch_logs_exports = var.rds_enabled_cloudwatch_logs_exports
-#   subnet_ids                      = var.rds_subnet_ids
-#   security_group_id               = module.rds_security_group.security_group_id
-#   storage_type                    = var.rds_storage_type
-#   allocated_storage               = var.rds_allocated_storage
-#   iops                            = var.rds_iops
-#   preferred_backup_window         = var.rds_preferred_backup_window
-#   preferred_maintenance_window    = var.rds_preferred_maintenance_window
-#   tags                            = var.tags
-#   performance_insights_enabled    = var.performance_insights_enabled
-# }
 
 module "s3" {
   source = "./modules/s3"
